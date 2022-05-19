@@ -6,7 +6,8 @@ const Profile = require('../models/profile');
 const User = require('../models/user');
 
 router.get('/api/test', (req, res) => {
-    res.send({data: "heyyyyy my api works here"})
+    user = User.find({})
+    res.send({data: user})
 })
 
 router.post('/user/profile/new', authjwt,  async (req, res) => {
