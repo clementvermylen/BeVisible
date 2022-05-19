@@ -5,8 +5,8 @@ const authjwt = require('../middleware/authjwt')
 const Profile = require('../models/profile');
 const User = require('../models/user');
 
-router.get('/api/test', (req, res) => {
-    user = User.find({})
+router.get('/api/test', async (req, res) => {
+    let user = await User.find({})
     res.send({data: user})
 })
 
