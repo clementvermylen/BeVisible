@@ -12,7 +12,8 @@ const userSchema = new Schema({
         //required: true
     },
     role: {
-        type: String
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Role"
     },
     promotion: {
         type: mongoose.Schema.Types.ObjectId,

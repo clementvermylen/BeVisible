@@ -5,10 +5,14 @@ const authjwt = require('../middleware/authjwt')
 const Profile = require('../models/profile');
 const User = require('../models/user');
 
+router.get('/api/test', (req, res) => {
+    res.send({data: "heyyyyy my api works here"})
+})
+
 router.post('/user/profile/new', authjwt,  async (req, res) => {
 
     const user = await User.findById(req.body.user_id)
-
+    console.log(req.body.user_id)
     const profile = await new Profile({
         picture: req.body.picture,
         name: req.body.name,

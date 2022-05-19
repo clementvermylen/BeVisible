@@ -5,39 +5,27 @@ var jwt = require('jsonwebtoken')
 const config = require('../config/auth.js')
 
 const User = require('../models/user');
+const Role = require('../models/role');
 
-router.post('/user/signup', (req, res, next) => {
-  
-//   let user = new User({
-//     email: req.body.email,
-//     password: req.body.password,
-//     role: req.body.role,
-    
-//   });
-  
-
-//   // save user to database
-//   try {
-//     user.save()
-//     res.send({success: "New user has been created"})
-// } catch (error) {
-//     res.send({error: error})
-// }
+router.post('/user/signup', async (req, res, next) => {
+//sign up student
 const user = new User({
   email: req.body.email,
   password: bcrypt.hashSync(req.body.password, 8)
 });
-user.save((err, user) => {
+  const role = await Role.findOne({title:"student"})
+  user.role = role._id
+  
+await user.save((err, user) => {
   if (err) {
     res.status(500).send({ message: err });
     return;
   }
-  res.send({ message: "User was registered successfully!" }); 
+  res.send({ message: "User was registered successfully!" + " " + user._id + " " + role}); 
 });
 });
 
-
-//sign in
+//sign in student
 router.post("/user/signin", (req,res,next) => {
   User.findOne({
     email: req.body.email
@@ -72,4 +60,24 @@ router.post("/user/signin", (req,res,next) => {
   });
 
 })
+
+//sign up company
+router.post('/company/signup', async (req, res, next) => {
+
+  const user = new User({
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 8)
+  });
+    const role = await Role.findOne({title:"company"})
+    user.role = role._id
+    
+  await user.save((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.send({ message: "Company was registered successfully!" + " " + user._id + " " + role}); 
+  });
+  });
+
   module.exports = router;

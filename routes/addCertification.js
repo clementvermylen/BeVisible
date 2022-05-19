@@ -23,6 +23,7 @@ router.post('/user/addCertification', async (req, res) => {
 
         const profile = await Profile.findByIdAndUpdate(req.body.profileid,{$push: { certifications: certification }})
         res.send({success: `${certification} has been added to ${profile}`})
+        console.log(certification)
 
     } catch (err) {
         res.send({error: err})
