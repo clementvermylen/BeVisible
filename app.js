@@ -18,10 +18,10 @@ const PORT = process.env.PORT || 3000;
 mongoose.promise = global.Promise;
 
 //cors
-var corsOptions = {
-    origin: "http://localhost:3001"
-  };
-  app.use(cors(corsOptions));
+// var corsOptions = {
+//     origin: "http://localhost:3001"
+//   };
+//   app.use(cors(corsOptions));
 
 //ejs
 app.use(express.json());
