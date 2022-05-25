@@ -17,11 +17,9 @@ const PORT = process.env.PORT || 3000;
 
 mongoose.promise = global.Promise;
 
-//cors
-// var corsOptions = {
-//     origin: "http://localhost:3001"
-//   };
-//   app.use(cors(corsOptions));
+app.use(cors({
+    origin: '*'
+}));
 
 //ejs
 app.use(express.json());
@@ -43,10 +41,6 @@ app.use('/', require('./routes/getProfiles.js'));
 app.use('/', require('./routes/addCertification.js'));
 app.use('/', require('./routes/profile.js'));
 app.use('/', require('./routes/project.js'));
-
-
-
-
 
 app.listen(PORT, () => { console.log('Server started on port 3000') });
 module.exports = app;
