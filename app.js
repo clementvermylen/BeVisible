@@ -27,23 +27,6 @@ mongoose.promise = global.Promise;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//passport setup
-// app.use(session({
-//     secret: 'secret',
-//     resave: true,
-//     saveUninitialized: true
-//   }));
-//   app.use(passport.initialize());
-//   app.use(passport.session());
-//   app.use(flash());
-//   app.use((req, res, next) => {
-//     res.locals.success_msg = req.flash('success_msg');
-//     res.locals.error_msg = req.flash('error_msg');
-//     res.locals.error = req.flash('error');
-//     next();
-//   })
-//connection to db
-
 try {
     const conn = mongoose.connect('mongodb+srv://Clement:OaKBcboZnufXxmvy@bevisibledb.wqxjx.mongodb.net/BeVisible?retryWrites=true&w=majority', { useNewUrlParser: true }, () => {
         console.log('connected to db')
@@ -59,6 +42,7 @@ app.use('/', require('./routes/addToPromo.js'));
 app.use('/', require('./routes/getProfiles.js'));
 app.use('/', require('./routes/addCertification.js'));
 app.use('/', require('./routes/profile.js'));
+app.use('/', require('./routes/project.js'));
 
 
 

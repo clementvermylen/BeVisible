@@ -10,7 +10,7 @@ const certificationSchema = new Schema({
         type: String,
     },
     date: {
-        type: Number,
+        type: String,
     },
     name: {
         type: String,

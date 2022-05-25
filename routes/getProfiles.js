@@ -5,42 +5,55 @@ const authjwt = require('../middleware/authjwt')
 const User = require('../models/user');
 const Profile = require('../models/profile');
 
-// recruiter routes
+// company routes
 router.get('/user/all', authjwt , async (req, res) => {
-    if (await User.findById(req.body.id).role == "62860fa0210230064d61b8c0" || User.findById(req.body.id).role == "62860f92210230064d61b8bf") {
+    //check privilege
+    const user = await User.findById(req.body.id).populate("role")
+    if (user.role._id == "62860fa0210230064d61b8c0" || user.role._id == "62860f92210230064d61b8bf") {
+        console.log(user.role._id)
+        //query profile
         try {
-            const user = await User.find({}).populate("profile")
-            console.log(user)
-            res.status(200).send(user);
+            const users = await User.find({ profile: { $ne: null } }).populate("profile").select("profile")
+            res.status(200).send({data: users});
+
         } catch (error) {
             res.send({error: error})
         }
     } else {
-        let help = await User.findById(req.body.id).role
-        console.log(help)
+        console.log(role.role._id)
         res.send({error:"you dont have the sufficent rank to use this route"})
     }
 
 
 })
 
-router.get('/user/get_one_user/:id', async (req, res) => {
-    try {
-        const student = await User.findById(req.body.id).populate("profile").populate("role")
-        console.log(student.role)
-        res.status(200).send(student);
-    } catch (error) {
-        res.send({error: error})
-    }
+router.get('/user/get_one_user', authjwt, async (req, res) => {
+    //check privileges
+    const user = await User.findById(req.body.id).populate("role")
+    if (user.role._id == "62860fa0210230064d61b8c0" || user.role._id == "62860f92210230064d61b8bf") {
+        //query profile
+        try {
+            const student = await User.findById(req.body.student_id).populate("profile").populate("role")
+            const profile = await Profile.findById(student.profile._id).populate("certifications").populate('projects')
+            console.log(profile)
+            res.status(200).send({data: student.profile, role: student.role, certifications: profile.certifications, projects: profile.projects});
+        } catch (err) {
+            res.send({error: err})
+        }
+    } else {
+    console.log(user.role._id)
+    res.send({error:"you dont have the sufficent rank to use this route"})
+    }   
 })
 
 // student route
-router.get('/user/profile', async (req, res) => {
-
+router.get('/user/profile', authjwt , async (req, res) => {
+    //query profile
     try {
-        const student = await User.findById(req.body.id).populate("profile")
-        console.log(student.profile)
-        res.status(200).send({profile: student});
+        const student = await User.findById(req.body.id).populate("profile").populate("role")
+        const profile = await Profile.findById(student.profile.id).populate("certifications").populate('projects')
+        console.log(profile.certifications)
+        res.status(200).send({data: student.profile, role: student.role, certification: profile.certifications, projects: profile.projects});
     } catch (error) {
         res.send({error: error})
     }

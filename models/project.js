@@ -9,9 +9,9 @@ const projectSchema = new Schema({
     image: [{
         type: String,
     }],
-    link: [{
+    link: {
         type: String,
-    }]
+    }
 });
 
 const Project = new mongoose.model('Project', projectSchema)

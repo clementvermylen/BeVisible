@@ -43,14 +43,14 @@ const profileSchema = new Schema({
             type: String
         }
     },
-    projects: {
+    projects: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Project"
-    },
-    certifications: {
+    }],
+    certifications: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Certification"
-    }
+    }]
 });
 
 const Profile = new mongoose.model('Profile', profileSchema)
