@@ -7,22 +7,15 @@ const Profile = require('../models/profile');
 
 // company routes
 router.get('/user/all', authjwt , async (req, res) => {
-    //check privilege
-    const user = await User.findById(req.body.id).populate("role")
-    if (user.role._id == "62860fa0210230064d61b8c0" || user.role._id == "62860f92210230064d61b8bf") {
-        console.log(user.role._id)
-        //query profile
-        try {
-            const users = await User.find({ profile: { $ne: null } }).populate("profile").select("profile")
-            res.status(200).send({data: users});
 
-        } catch (error) {
-            res.send({error: error})
-        }
-    } else {
-        console.log(role.role._id)
-        res.send({error:"you dont have the sufficent rank to use this route"})
+    //query profile
+    try {
+        const users = await User.find({ profile: { $ne: null } }).populate("profile").select("profile")
+        res.status(200).send({data: users});
+    } catch (error) {
+        res.send({error: error})
     }
+
 
 
 })
