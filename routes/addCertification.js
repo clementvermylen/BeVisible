@@ -8,7 +8,7 @@ const Certification = require('../models/certification');
 
 // { profileid: _id, image: string, message: string, name: string }
 
-router.post('/user/profile/certification/new', cors(), authjwt ,async (req, res) => {
+router.post('/user/profile/certification/new',  authjwt ,async (req, res) => {
     //check privilege
     const user = await User.findById(req.body.id).populate("role")
     if (user.role._id == "62860fa0210230064d61b8c0") {
