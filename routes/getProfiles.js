@@ -44,6 +44,7 @@ router.get('/user/profile', authjwt , async (req, res) => {
     try {
         const student = await User.findById(req.body.id).populate("profile").populate("role")
         const profile = await Profile.findById(student.profile.id).populate("certifications").populate('projects')
+        console.log(profile)
         console.log(profile.certifications)
         res.status(200).send({data: student.profile, role: student.role, certification: profile.certifications, projects: profile.projects});
     } catch (error) {

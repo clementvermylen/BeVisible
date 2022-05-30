@@ -37,14 +37,14 @@ router.post('/user/profile/new', authjwt,  async (req, res) => {
                 github: req.body.socials.github,
                 linkedin: req.body.socials.linkedin,
                 website: req.body.socials.website
-            },
+            }
         });
     //save profile
         try {
             await profile.save()
             user.profile = profile.id 
             await user.save()
-            await res.send({message: `${profile.name}'s profile has been created`})
+            await res.send({message: `${profile.firstname}'s profile has been created`})
         } catch (error) {
             res.send({error: error})
         }
