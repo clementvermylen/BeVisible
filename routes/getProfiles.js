@@ -34,7 +34,6 @@ router.get('/user/get_one_user', authjwt, async (req, res) => {
             res.send({error: err})
         }
     } else {
-    console.log(user.role._id)
     res.send({error:"you dont have the sufficent rank to use this route"})
     }   
 })
