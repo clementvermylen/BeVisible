@@ -6,7 +6,7 @@ const User = require('../models/user');
 const Profile = require('../models/profile');
 
 // company routes
-router.get('/user/all', authjwt , async (req, res) => {
+router.get('/user/all', cors(), authjwt , async (req, res) => {
 
     //query profile
     try {
@@ -20,7 +20,7 @@ router.get('/user/all', authjwt , async (req, res) => {
 
 })
 
-router.get('/user/get_one_user', authjwt, async (req, res) => {
+router.get('/user/get_one_user', cors(), authjwt, async (req, res) => {
     //check privileges
     const user = await User.findById(req.body.id).populate("role")
     if (user && (user.role._id == "62860fa0210230064d61b8c0" || user.role._id == "62860f92210230064d61b8bf")) {
@@ -39,7 +39,7 @@ router.get('/user/get_one_user', authjwt, async (req, res) => {
 })
 
 // student route
-router.get('/user/profile', authjwt , async (req, res) => {
+router.get('/user/profile', cors(), authjwt , async (req, res) => {
     //query profile
     try {
         const student = await User.findById(req.body.id).populate("profile").populate("role")

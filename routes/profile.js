@@ -5,7 +5,7 @@ const authjwt = require('../middleware/authjwt')
 const Profile = require('../models/profile');
 const User = require('../models/user');
 
-router.post('/user/profile/new', authjwt,  async (req, res) => {
+router.post('/user/profile/new', cors(),authjwt,  async (req, res) => {
     //check privilege
     const user = await User.findById(req.body.id).populate("role")
     console.log(user)
@@ -54,7 +54,7 @@ router.post('/user/profile/new', authjwt,  async (req, res) => {
     }
 })
 
-router.post('/user/profile/edit', authjwt ,async (req, res) => {
+router.post('/user/profile/edit', cors(),authjwt ,async (req, res) => {
     // check privileges
     const user = await User.findById(req.body.id).populate("role")
     if (user.role._id == "62860fa0210230064d61b8c0" || user.role._id == "62860f5f210230064d61b8be") {
