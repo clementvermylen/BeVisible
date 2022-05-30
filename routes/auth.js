@@ -11,21 +11,37 @@ const Role = require('../models/role');
 //sign up student
 router.post('/user/signup', async (req, res, next) => {
 
-const user = new User({
-  email: req.body.email,
-  password: bcrypt.hashSync(req.body.password, 8)
-});
-  const role = await Role.findOne({title:"student"})
-  user.role = role._id
-  
-await user.save((err, user) => {
-  if (err) {
-    res.status(500).send({ message: err });
-    return;
-  }
-  res.send({ message: "User was registered successfully! " + user._id + " " + role}); 
-});
-});
+  const users = await User.find({email:req.body.email})
+  console.log(users.length)
+
+    if (users.length===0) {
+
+      const user = new User({
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8)
+      });
+
+      const role = await Role.findOne({title:"student"})
+      user.role = role._id
+        
+      await user.save((err, user) => {
+
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        else {
+          res.send({ message: "User was registered successfully! " + user._id + " " + role}); 
+       }
+      });
+    }
+    else {
+      res.send({ error: "A user with this email address already exists"}); 
+    }
+})
+
+
+
 
 //sign up company
 router.post('/company/signup', authjwt , async (req, res, next) => {
@@ -33,21 +49,30 @@ router.post('/company/signup', authjwt , async (req, res, next) => {
     const admin = await User.findById(req.body.id).populate("role")
     if (admin.role._id == "62860fa0210230064d61b8c0") {
 
-      const user = new User({
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 8)
-      });
-        
-      const role = await Role.findOne({title:"company"})
-      user.role = role._id
-      console.log(user._id)
-      await user.save((err, user) => {
-      if (err) {
-        res.status(500).send({ error: err });
-        return;
-      }
-      res.send({ message: "Company was registered successfully! " + user._id + " " + role}); 
-      });
+      const users = await User.find({email:req.body.email})
+      console.log(users.length)
+    
+        if (users.length===0) {
+    
+          const user = new User({
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, 8)
+          });
+            
+          const role = await Role.findOne({title:"company"})
+          user.role = role._id
+          console.log(user._id)
+          await user.save((err, user) => {
+          if (err) {
+            res.status(500).send({ error: err });
+            return;
+          }
+          res.send({ message: "Company was registered successfully! " + user._id + " " + role}); 
+          });
+        }
+        else {
+          res.send({ error: "A user with this email address already exists"}); 
+        }
     } else {
         console.log(admin.role._id)
         res.send({error:"you dont have the sufficent rank to use this route"})
