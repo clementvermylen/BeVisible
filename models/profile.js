@@ -6,11 +6,15 @@ const profileSchema = new Schema({
     picture: {
         type: String,  
     },
-    name: {
+    firstname: {
+        type: String,  
+    },
+    lastname: {
         type: String,  
     },
     title: {
-        type: String,
+        frontend: String,
+        backend: String
     },
     about: {
         type: String,
@@ -32,6 +36,12 @@ const profileSchema = new Schema({
     interests: {
         type: String,
     },
+    cvLink: {
+        type: String,  
+    },
+    phoneNumber: {
+        type: String,  
+    },
     socials: {
         email: {
             type: String
@@ -40,8 +50,11 @@ const profileSchema = new Schema({
             type: String
         },
         linkedin: {
-            type: String
-        }
+            type: String,  
+        },
+        website: {
+            type: String,  
+        },
     },
     projects: [{
         type: mongoose.Schema.Types.ObjectId,

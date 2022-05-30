@@ -12,8 +12,12 @@ router.post('/user/profile/new', authjwt,  async (req, res) => {
     if (user.role._id == "62860fa0210230064d61b8c0" || user.role._id == "62860f5f210230064d61b8be") {
         const profile = await new Profile({
             picture: req.body.picture,
-            name: req.body.name,
-            title: req.body.title,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            title: {
+                frontend: req.body.work.frontend,
+                backend: req.body.work.backend
+            },
             about: req.body.about,
             status: req.body.status,
             tags: req.body.tags,
@@ -26,10 +30,13 @@ router.post('/user/profile/new', authjwt,  async (req, res) => {
                 graduation: req.body.education.graduation
             },
             interests: req.body.interests,
+            cvlink: req.body.cvlink,
+            phonenumber: req.body.phonenumber,
             socials: {
                 email: req.body.socials.email,
                 github: req.body.socials.github,
-                linkedin: req.body.socials.linkedin
+                linkedin: req.body.socials.linkedin,
+                website: req.body.socials.website
             },
         });
     //save profile

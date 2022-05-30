@@ -23,7 +23,7 @@ router.get('/user/all', authjwt , async (req, res) => {
 router.get('/user/get_one_user', authjwt, async (req, res) => {
     //check privileges
     const user = await User.findById(req.body.id).populate("role")
-    if (user.role._id == "62860fa0210230064d61b8c0" || user.role._id == "62860f92210230064d61b8bf") {
+    if (user && (user.role._id == "62860fa0210230064d61b8c0" || user.role._id == "62860f92210230064d61b8bf")) {
         //query profile
         try {
             const student = await User.findById(req.body.student_id).populate("profile").populate("role")
